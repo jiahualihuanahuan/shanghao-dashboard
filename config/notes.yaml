@@ -1,0 +1,85 @@
+# Notes feed for topics that have no free real-time data. Each item points at one episode.
+# basis: "own ASR" = from my machine transcription of the video (may contain errors);
+#        "third-party AI summary" = from Podwise/BidClub summaries (AI-generated, not verified against audio).
+# Paraphrases only. No trade recommendations. Dates come from data/videos.csv (the real upload date).
+notes:
+  - episode: 63vcms-Sw6w
+    topic: T9
+    basis: own ASR
+    text: "Opens by discussing the US midterm result as ASR heard it (both chambers going to Democrats, including Texas) and its implication for AI data-centre buildout sentiment; says market liquidity is still scarce."
+  - episode: ZPJgzAP-iqU
+    topic: T6
+    basis: third-party AI summary
+    text: "Long-run view on Intel unchanged: external customers and fresh funding address the foundry's problems; 18A/14A yields improving; Google and MediaTek reported to have confirmed EMIB packaging orders; the near-term guide was hurt mainly by China PC demand."
+  - episode: ZPJgzAP-iqU
+    topic: T2
+    basis: third-party AI summary
+    text: "Argues the AI financing debate is about credibility of far-out (2028-29) demand, not lack of capital (cites an ~18 trn private-credit market); compute is priced with a heavy discount while industry locks in pricier compute early."
+  - episode: KwpuAfVKNQI
+    topic: T2
+    basis: third-party AI summary
+    text: "Attributes the AI selloff to rate and credit liquidity shocks rather than weaker demand; cites neocloud funding of roughly 230 bn this year and 420 bn next, ~500 bn hyperscaler headroom, with the debt test around end-2027 to 2028."
+  - episode: xfiZFQJW3gk
+    topic: T2
+    basis: own ASR
+    text: "2027 financing demand is large but does not yet collide with the refinancing wall, which arrives in 2028; AI project financing of this kind is described as exposed to AI demand, similar to equity."
+  - episode: ydZQ-kVeYHw
+    topic: T6
+    basis: third-party AI summary
+    text: "Rate volatility rather than the rate level is called the core risk; AI investment of 1.2-1.5 trn (possibly 1.5 trn) is a figure to track through the earnings season."
+  - episode: Ca6l5KCuGoc
+    topic: T8
+    basis: third-party AI summary
+    text: "Refined products (diesel) are the key inflation variable: China exporting an extra 1-2 mb/d, crack spread possibly easing toward 40; if exports are restricted, European diesel could rise 50%+."
+  - episode: df816GNfpPw
+    topic: T6
+    basis: third-party AI summary
+    text: "Power and permitting are framed as AI's bottleneck: only ~11-14 GW of projects have both permits and power, GE turbine slots are booked to 2031, so compute may migrate to regions with power."
+  - episode: sZi9d2wjmFE
+    topic: T9
+    basis: third-party AI summary
+    text: "Recent equity weakness attributed to AI-regulation headlines (used politically ahead of midterms) rather than macro fundamentals; market priced 3.5-4 Fed hikes vs about one on the dot plot."
+  - episode: TQ3G5Jf-yNM
+    topic: T6
+    basis: third-party AI summary
+    text: "Bearish sentiment traced to slowing ARR growth at AI labs (Anthropic cited); he argues cloud-vendor data show compute payback remains attractive and enterprise demand is broadening beyond coding."
+  - episode: ZdgSfsSPnXQ
+    topic: T4
+    basis: third-party AI summary
+    text: "Selloff described as unwinding of quantitative momentum positions in semiconductors, expected to take about two more weeks; open-source models (Kimi named) seen as adding to inference demand."
+  - episode: 99aca6OCfsI
+    topic: T6
+    basis: third-party AI summary
+    text: "AI investment review lists four fragilities: low P/E masking leverage, liquidity-driven 'dopamine' that fades, a shift of the semiconductor chain from monopoly to many competitors, and dependence on model performance matching revenue growth."
+  - episode: WOmqPSy7Bbw
+    topic: T4
+    basis: third-party AI summary
+    text: "CTA and systematic funds bought roughly 135 bn over three weeks and that fuel was said to be running out, shifting focus back to earnings; Kevin Warsh's stance possibly more flexible than priced."
+  - episode: PkPEVz0_kjE
+    topic: T4
+    basis: third-party AI summary
+    text: "Despite ~180 bn of CTA selling pressure in the prior month, the market stayed resilient on low valuation and AI compute demand; watch liquidity drain around tax season."
+  - episode: 3l5m7wleIjA
+    topic: T8
+    basis: third-party AI summary
+    text: "Iran-related oil supply shock is the core variable; the Fed is described as more likely to protect growth than hike; US equity valuation back to last April's lows."
+  - episode: mu8UnEUDk48
+    topic: T2
+    basis: own ASR
+    text: "Credit-market worries since end-September (auto-loan collateral defaults, regional-bank cases); he judges these as single cases rather than systemic, and discusses VIX as a gauge of market gamma positioning."
+  - episode: jMm60vvKZiI
+    topic: T9
+    basis: own ASR
+    text: "Reviews the administration's levers (deficit, tariffs and the legal path for tariffs, deregulation, tighter immigration reducing labor supply) and links deregulation to AI power needs."
+  - episode: CPpwPnpLc8g
+    topic: T7
+    basis: own ASR
+    text: "After the April 2025 tariff shock he describes a tail-risk scenario (GDP of 0.5-1%), says the prime-brokerage 'global book' flow z-score reached 6 sigma, and expects violent rallies inside a downtrend."
+  - episode: qIRZZeHo62k
+    topic: T9
+    basis: own ASR
+    text: "Year-end review: cutting the deficit from 6-7% of GDP toward 3% would need roughly 4% extra productivity, which he thinks is unrealistic given 1-1.5% historical productivity growth; discusses Bessent as Treasury pick."
+  - episode: W1pUl4cwvOY
+    topic: T3
+    basis: own ASR
+    text: "When payrolls and the unemployment rate conflict he leans on payrolls; says the Fed is likely to cut if unemployment reaches about 4%."

@@ -1,0 +1,38 @@
+# Figures with no free live source. Fill `value` and `as_of` (YYYY-MM-DD); they appear in the dashboard with a
+# stale badge once older than `stale_days`, and feed alerts (e.g. fwd P/E). Leave value empty to hide.
+manual:
+  - id: fwd_pe_sp500
+    label: S&P 500 forward P/E (x)
+    unit: x
+    value:
+    as_of:
+    stale_days: 14
+    note: He uses forward P/E (23x -> 18x in 2026). No free reliable live API.
+  - id: fed_hike_pricing
+    label: Market-implied Fed hikes priced (number)
+    unit: hikes
+    value:
+    as_of:
+    stale_days: 7
+    note: He compares market pricing to the Fed dot plot (e.g. 3.5-4 vs ~1). CME FedWatch has no free API.
+  - id: hyperscaler_capex_guidance
+    label: Hyperscaler capex guidance, current year (USD bn)
+    unit: $bn
+    value:
+    as_of:
+    stale_days: 100
+    note: From quarterly earnings releases.
+  - id: ai_capex_total_est
+    label: Total AI capex estimate (USD trn)
+    unit: $trn
+    value:
+    as_of:
+    stale_days: 100
+    note: He cites 1.2-1.5 trn for AI spend.
+  - id: semis_hf_net_exposure
+    label: Semiconductor hedge-fund net exposure (percentile or %, your own source)
+    unit: ""
+    value:
+    as_of:
+    stale_days: 14
+    note: Prime-broker data is paid; enter what you have.

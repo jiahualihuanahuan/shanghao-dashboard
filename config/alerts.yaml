@@ -1,0 +1,178 @@
+# Threshold alerts. Evaluated after every data refresh by the app (/api/alerts) and, with the same code,
+# by tools/check_alerts.py. Edit freely; restart the backend (or POST /api/alerts/reload) to apply.
+#
+# kind:        level | change_abs | change_pct  (change_* compare the latest value with the value window_days ago)
+# basis:       "his stated level"  = a level/figure he said in an episode (episode id in `episode`)
+#              "heuristic"         = my proposed default, NOT something he said - please confirm or change
+# These describe indicator conditions only. They are not buy/sell signals.
+cooldown_hours: 24
+default_stale_days: 5
+
+alerts:
+  - id: us10y_ge_5_5
+    metric: us10y
+    kind: level
+    op: ">="
+    threshold: 5.5
+    severity: high
+    basis: his stated level
+    episode: xfiZFQJW3gk
+    message: "US 10Y yield {value}% >= {threshold}% (he flagged 5.5%+ as the level that could trigger another convexity-hedging wave)"
+  - id: us10y_fast_rise
+    metric: us10y
+    kind: change_abs
+    window_days: 28
+    op: ">="
+    threshold: 0.40
+    severity: high
+    basis: heuristic (modelled on his 4.5%->5.3% example)
+    episode: xfiZFQJW3gk
+    message: "US 10Y up {value}pp in {window_days}d (>= {threshold}pp) - fast rate move / rate-vol risk"
+  - id: vix_term_inversion
+    metric: vix_term_ratio
+    kind: level
+    op: ">="
+    threshold: 1.0
+    severity: high
+    basis: heuristic
+    message: "VIX/VIX3M = {value} (>= {threshold}): VIX term structure inverted"
+  - id: vix_ge_30
+    metric: vix
+    kind: level
+    op: ">="
+    threshold: 30
+    severity: medium
+    basis: heuristic
+    message: "VIX {value} >= {threshold}"
+  - id: move_ge_120
+    metric: move
+    kind: level
+    op: ">="
+    threshold: 120
+    severity: medium
+    basis: heuristic
+    message: "MOVE index {value} >= {threshold} (rate-volatility proxy; he treats rate vol as the core liquidity risk)"
+  - id: hy_oas_jump
+    metric: hy_oas
+    kind: change_abs
+    window_days: 28
+    op: ">="
+    threshold: 0.75
+    severity: high
+    basis: heuristic
+    message: "US HY OAS widened {value}pp in {window_days}d (>= {threshold}pp)"
+  - id: ccc_oas_jump
+    metric: ccc_oas
+    kind: change_abs
+    window_days: 28
+    op: ">="
+    threshold: 1.5
+    severity: high
+    basis: heuristic
+    message: "CCC OAS widened {value}pp in {window_days}d (>= {threshold}pp) - he says CCC feels stress first"
+  - id: sofr_funding_stress
+    metric: sofr_p99_spread
+    kind: level
+    op: ">="
+    threshold: 0.15
+    severity: medium
+    basis: heuristic
+    message: "SOFR 99th percentile is {value}pp above median (>= {threshold}pp): funding pressure"
+  - id: brent_spike
+    metric: brent
+    kind: change_pct
+    window_days: 7
+    op: ">="
+    threshold: 10
+    severity: medium
+    basis: heuristic
+    message: "Brent +{value}% in {window_days}d (>= {threshold}%)"
+  - id: diesel_crack_high
+    metric: diesel_crack
+    kind: level
+    op: ">="
+    threshold: 100
+    severity: medium
+    basis: heuristic (he mentioned a ~40 USD/bbl crack as a reference level; the live crack was ~80 on 2026-11-10)
+    episode: Ca6l5KCuGoc
+    message: "Diesel crack {value} USD/bbl >= {threshold}"
+  - id: spx_drawdown_10
+    metric: spx_drawdown_pct
+    kind: level
+    op: "<="
+    threshold: -10
+    severity: medium
+    basis: heuristic (he cites 20-25% pullbacks in 2018 and 2022 as history)
+    message: "S&P 500 is {value}% from its 52-week high (<= {threshold}%)"
+  - id: sox_weekly_drop
+    metric: sox
+    kind: change_pct
+    window_days: 7
+    op: "<="
+    threshold: -8
+    severity: medium
+    basis: heuristic (he describes semiconductor momentum unwinds)
+    message: "SOX {value}% in {window_days}d (<= {threshold}%)"
+  - id: usdjpy_carry_unwind
+    metric: usdjpy
+    kind: change_pct
+    window_days: 7
+    op: "<="
+    threshold: -3
+    severity: medium
+    basis: heuristic (yen carry-trade unwind theme)
+    message: "USD/JPY {value}% in {window_days}d (<= {threshold}%): possible carry unwind"
+  - id: btc_weekly_drop
+    metric: btc
+    kind: change_pct
+    window_days: 7
+    op: "<="
+    threshold: -15
+    severity: low
+    basis: heuristic
+    message: "Bitcoin {value}% in {window_days}d (<= {threshold}%)"
+  - id: skew_high
+    metric: skew
+    kind: level
+    op: ">="
+    threshold: 155
+    severity: low
+    basis: heuristic
+    message: "Cboe SKEW {value} >= {threshold}"
+  - id: gex_negative
+    metric: net_gex
+    kind: level
+    op: "<="
+    threshold: 0
+    severity: low
+    cooldown_hours: 48
+    enabled: false
+    basis: heuristic, DISABLED by default until calibrated (crude estimate; assumes dealers are long calls / short puts)
+    message: "SPX net gamma estimate {value} $bn/1% (<= {threshold}): negative-gamma regime estimate"
+  - id: unrate_ge_4
+    metric: unrate
+    kind: level
+    op: ">="
+    threshold: 4.0
+    severity: low
+    basis: his stated level (2024-06 episode; may be outdated)
+    episode: W1pUl4cwvOY
+    message: "Unemployment {value}% >= {threshold}% (he said ~4% makes Fed cuts likely)"
+  - id: fwd_pe_low
+    metric: manual_fwd_pe_sp500
+    kind: level
+    op: "<="
+    threshold: 18
+    severity: low
+    basis: his stated level (S&P forward P/E fell from 23x to 18x in 2026)
+    episode: ZPJgzAP-iqU
+    message: "S&P 500 forward P/E (manual input) {value}x <= {threshold}x"
+  - id: fwd_pe_high
+    metric: manual_fwd_pe_sp500
+    kind: level
+    op: ">="
+    threshold: 23
+    severity: low
+    basis: his stated level (the 23x starting point)
+    episode: ZPJgzAP-iqU
+    message: "S&P 500 forward P/E (manual input) {value}x >= {threshold}x"

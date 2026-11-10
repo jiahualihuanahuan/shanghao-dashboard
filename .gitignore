@@ -1,0 +1,16 @@
+.env
+*.sqlite
+*.sqlite-journal
+*.db
+data/
+transcripts/
+audio/
+*.mp3
+*.wav
+node_modules/
+frontend/dist/
+__pycache__/
+.pytest_cache/
+.venv/
+venv/
+alerts_state.json

@@ -1,0 +1,117 @@
+# Maps each dashboard indicator to the keywords used to find what he said about it in the transcripts.
+# Keywords are regexes (case-insensitive). The transcripts are automatic speech-to-text (faster-whisper "small"),
+# which garbles English finance terms - so common mis-hearings are listed too (e.g. "compressorly" = convexity).
+# min_hits = distinct keywords that must appear in a ~3-line window for it to count.
+topics:
+  T1: Liquidity & rates
+  T2: Credit & funding
+  T3: Fed & labor
+  T4: Positioning & flows
+  T5: Valuation
+  T6: AI & semiconductors
+  T7: Tariffs & trade
+  T8: Energy & geopolitics
+  T9: Politics & policy
+  T10: Japan, FX & crypto
+
+indicators:
+  rates_10y:
+    title: US long-end yields (10Y/30Y)
+    topic: T1
+    min_hits: 1
+    keywords: ["十年期", "10年期", "10年利率", "长端", "long.?end", "10.?year", "5\\.5", "国债拍卖", "国债供应", "term premium", "长期利率"]
+  rate_vol:
+    title: Rate volatility, convexity hedging, swaption/gamma squeezes
+    topic: T1
+    min_hits: 2
+    keywords: ["利率波动", "波动率", "convex", "compressorly", "compatibility", "combat to the", "swaption", "swapshin", "swap vol", "gamma squeeze", "\\bMBS\\b", "mogage", "mortgage", "预先还款", "对冲波动"]
+  curve:
+    title: Yield curve slope
+    topic: T1
+    min_hits: 1
+    keywords: ["steep", "收益率曲线", "曲线", "倒挂", "yield curve"]
+  funding:
+    title: Funding & liquidity plumbing (SOFR, repo, TGA, balance sheet)
+    topic: T1
+    min_hits: 1
+    keywords: ["SOFR", "repo", "\bTGA\b", "缩表", "扩表", "\bQE\b", "\bQT\b", "准备金", "reserve", "资金面", "缺钱", "流动性紧"]
+  credit_spreads:
+    title: Credit spreads (HY, CCC, IG), CDS
+    topic: T2
+    min_hits: 2
+    keywords: ["high.?yield", "hi-you", "hio", "CCC", "\\bIG bond\\b", "igbond", "投资级", "信用", "信贷", "credit", "spread", "\\bCDS\\b", "违约", "利差", "private credit", "私募信贷"]
+  funding_ai_debt:
+    title: AI financing, hyperscaler bond issuance, refinancing wall
+    topic: T2
+    min_hits: 2
+    keywords: ["发债", "融资", "refinanc", "再融资", "展期", "债务", "issuance", "冤大头", "项目融资", "CoreWeave", "CSP"]
+  fed_policy:
+    title: Fed policy, hikes/cuts and market pricing
+    topic: T3
+    min_hits: 1
+    keywords: ["美联储", "联储", "连储", "连处", "\\bFOMC\\b", "降息", "加息", "\\bdot\\b", "\\bFed\\b", "鹰", "鸽", "Warsh", "Kevin"]
+  labor_inflation:
+    title: Jobs (NFP, unemployment), wages and inflation
+    topic: T3
+    min_hits: 1
+    keywords: ["非农", "payroll", "\\bNFP\\b", "失业率", "unemployment", "工资", "wage", "\\bCPI\\b", "通胀", "通脏", "inflation", "就业"]
+  vol_gamma:
+    title: VIX, SKEW, dealer gamma
+    topic: T4
+    min_hits: 2
+    keywords: ["\\bVIX\\b", "\\bvol\\b", "gamma", "skew", "期权", "option", "波动力"]
+  cta_flows:
+    title: CTA / systematic flows, momentum unwind
+    topic: T4
+    min_hits: 2
+    keywords: ["\\bCTA\\b", "系统性", "momentum", "动量", "去杠杆", "de-?lever", "flow", "sigma", "global book", "平仓"]
+  positioning:
+    title: Fund positioning, shorts, hedge-fund exposure
+    topic: T4
+    min_hits: 2
+    keywords: ["仓位", "position", "short interest", "做空", "空头", "踏空", "对冲基金", "hfarm", "多空基金", "prime broker", "net margin"]
+  valuation:
+    title: Valuation (forward P/E, ERP)
+    topic: T5
+    min_hits: 2
+    keywords: ["估值", "\\bPE\\b", "市盈率", "multiple", "倍", "risk premium", "便宜", "forward"]
+  ai_demand:
+    title: AI demand, token consumption, compute, capex
+    topic: T6
+    min_hits: 2
+    keywords: ["token", "算力", "compute", "capex", "k-?pax", "k-?ship", "云厂商", "hyperscal", "数据中心", "agent", "Anthropic", "OpenAI"]
+  semis_memory:
+    title: Semiconductors, memory (DRAM/HBM), optical, foundry
+    topic: T6
+    min_hits: 1
+    keywords: ["半导体", "\\bDRAM\\b", "\\bHBM\\b", "存储", "TSMC", "台积电", "英伟达", "Nvidia", "\\bNVDA\\b", "Intel", "英特尔", "\\bAMD\\b", "光通讯", "18A", "14A", "良率", "封装", "EMIB", "晶圆"]
+  power_supply:
+    title: Power, permitting and supply bottlenecks
+    topic: T6
+    min_hits: 1
+    keywords: ["电力", "审批", "\bGW\b", "并网", "电网", "供应瓶颈", "turbine", "燃气轮机"]
+  tariffs:
+    title: Tariffs and trade
+    topic: T7
+    min_hits: 1
+    keywords: ["关税", "tariff", "贸易战", "Liberation", "稀土", "出口管制"]
+  energy:
+    title: Oil, diesel cracks, gas, geopolitics
+    topic: T8
+    min_hits: 1
+    keywords: ["油价", "原油", "brent", "\\bWTI\\b", "柴油", "diesel", "裂解差", "crack", "天然气", "伊朗", "战争", "打仗", "中东", "能源", "energy"]
+  politics:
+    title: Politics, elections, deregulation, immigration
+    topic: T9
+    min_hits: 1
+    keywords: ["选举", "民主党", "共和党", "特朗普", "川普", "监管", "deregulation", "移民", "中期选举", "Bessent", "Belson", "财长", "赤字"]
+  japan_fx:
+    title: Japan, yen, carry trade, dollar
+    topic: T10
+    min_hits: 2
+    keywords: ["日本", "日元", "yen", "\\bJGB\\b", "carry", "carriage", "外汇", "\\bFX\\b", "美元", "dollar", "\\bDXY\\b", "人民币"]
+  crypto:
+    title: Crypto
+    topic: T10
+    min_hits: 1
+    keywords: ["crypto", "比特币", "bitcoin", "\\bBTC\\b", "稳定币", "stablecoin", "加密"]
