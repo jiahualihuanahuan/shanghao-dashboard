@@ -14,7 +14,7 @@ PANELS = [
         C("curve", "10Y-2Y slope", ["curve_10y2y"], "pp", indicator="curve"),
         C("move", "MOVE index (rate-vol proxy)", ["move"], "pts", indicator="rate_vol",
           note="Closest free proxy for the 6m10y swap vol he watches; not the same thing."),
-        C("sofr", "SOFR and 99th-percentile spread", ["sofr"], "%", indicator="funding"),
+        C("sofr", "SOFR", ["sofr"], "%", indicator="funding"),
         C("sofr_sp", "SOFR p99 minus median", ["sofr_p99_spread"], "pp", indicator="funding"),
         C("tga", "Treasury General Account (opening)", ["tga_open"], "$bn", indicator="funding"),
         C("walcl", "Fed total assets (needs FRED key)", ["fred_walcl"], "$M", indicator="funding"),
@@ -27,7 +27,7 @@ PANELS = [
           note="He says the riskiest credit reacts first."),
         C("ig", "US IG OAS (needs FRED key)", ["ig_oas"], "%", indicator="credit_spreads"),
         C("dxy", "US Dollar Index", ["yh_dxy"], "idx", indicator="japan_fx"),
-        C("ai_debt", "AI-credit watch: CoreWeave and Oracle-like names", ["yh_crwv"], "USD", indicator="funding_ai_debt",
+        C("ai_debt", "AI-credit watch: CoreWeave (equity proxy)", ["yh_crwv"], "USD", indicator="funding_ai_debt",
           note="CDS spreads are paid data; the equity is only a proxy."),
     ]),
     dict(id="fed", title="Fed & labor", topic="T3", charts=[

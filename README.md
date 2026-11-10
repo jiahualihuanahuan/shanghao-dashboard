@@ -68,7 +68,7 @@ options expiring within 45 days. It is a rough indicator, not a measurement of d
 ## The "Shanghao view" and transcripts
 
 The backend reads `<video_id>.txt` files (lines `[seconds] text`) from the folder mounted at `/data/transcripts`
-(read-only; set `TRANSCRIPTS_HOST_PATH`). It rescans every `TRANSCRIPT_SCAN_MINUTES` (default 5) by modification time, so
+(read-only; set `TRANSCRIPTS_HOST_PATH`). **A fresh clone has no transcripts, so the Shanghao view stays empty until you point `TRANSCRIPTS_HOST_PATH` at a folder of `<video_id>.txt` files** (they are not in this repo). It rescans every `TRANSCRIPT_SCAN_MINUTES` (default 5) by modification time, so
 transcripts that arrive later appear without a restart. The header chip shows `transcripts x/90`.
 
 * `config/videos.csv` maps video id -> real upload date and title (titles contain typos, e.g. "2026年12月30日" was
@@ -87,7 +87,7 @@ transcripts that arrive later appear without a restart. The header chip shows `t
 
 * App: evaluated after every refresh. `GET /api/alerts` (all rules + current status), `GET /api/alerts/history`,
   `POST /api/alerts/reload`. The *Alerts* tab shows rule status and history. A rule re-alerts only after its cooldown.
-* **Standalone script** (Python 3.9+, stdlib only, public data only, same adapters and evaluator):
+* **Standalone script** (Python standard library only, public data only, same adapters and evaluator; written for 3.9+, verified on 3.13 only):
 
   ```bash
   python3 tools/check_alerts.py --state ~/.shanghao_alerts_state.json      # prints JSON
