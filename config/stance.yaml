@@ -1,0 +1,118 @@
+# Curated summary of his framework and calls, built from a read of all 89 available transcripts (2024-05-28 ..
+# 2026-11-10; WOmqPSy7Bbw / 2026-04-21 had no transcript in the full set). Served at /api/stance and shown in the
+# "Shanghao stance" tab. Paraphrases of auto-transcribed speech (ASR errors possible, flagged with "(ASR?)").
+# Every item cites an episode id from videos.csv. Not investment advice, not buy/sell signals.
+as_of: "2026-11-10"
+source: "Full transcript set (89 of 90 episodes, faster-whisper large-v3 export, no timestamps) + earlier timed ASR"
+
+latest:
+  episode: 63vcms-Sw6w
+  headline: "Short-term liquidity shock, not a fundamental AI top: stays constructive on AI/semis, wary of banks and financials."
+  points:
+    - text: "The Oct-Nov selloff is a liquidity shock that started in rates (oil-linked rate volatility after the Fed stopped managing the long end), spread to bonds/FX/European credit and then to AI equities; OpenAI and Anthropic fund-raises drained equity liquidity."
+      episode: 63vcms-Sw6w
+    - text: "Positioning and valuation are 'very empty': semis hedge-fund net exposure negative, buy/sell (long/short) ratio at a 10-year low comparable to the early-2026 Iran shock and the 2025 tariff shock; the market is in a 'downward bubble'. Very low positioning sets up violent rebounds."
+      episode: ZPJgzAP-iqU
+    - text: "After the Democratic sweep (as ASR heard it, including Texas) he sees three macro-liquidity risks: tighter regulation/pressure on the Fed (Warren on the banking committee), Warsh unwilling to support the long end with QE while Congress blocks deregulation, and a government shutdown."
+      episode: 63vcms-Sw6w
+    - text: "Liquidity should repair in steps: Iran easing -> oil down -> rate vol down -> credit buyers return -> liquidity. Expects multiple compression to continue (S&P around 20x instead of 23-24x even with rising earnings); most pessimistic on banks/financials, not on semis."
+      episode: 63vcms-Sw6w
+    - text: "AI demand: token demand is still far above supply ('beginning of the beginning'); coding demand (~300 bn) has not peaked; industry forward compute is priced in contango while public markets discount it; memory is cyclical - best case it holds current prices."
+      episode: ZPJgzAP-iqU
+  would_change_mind:
+    - text: "A second round of war / oil spike re-igniting the oil -> rates -> liquidity chain."
+      episode: ZPJgzAP-iqU
+    - text: "Liquidity tightness persisting long enough to spread beyond AI/semis to Apple, Walmart and the broad S&P."
+      episode: ZPJgzAP-iqU
+    - text: "Evidence that token demand / AI revenue really stalls (he argues the 2027-28 doubts are being over-priced while liquidity is thin)."
+      episode: 63vcms-Sw6w
+
+key_levels:
+  - metric: us10y
+    text: "10Y fair range 4.25-4.5% (2024-25); 4.0% called the floor/'limit' (2025-09, 2025-10); 2026-01: 4.2-4.25 seen as a cap and a touch of 4.5 described as a bond opportunity."
+    episodes: [jEHw9Kh5BlU, AZ2qHGStV2w, RGicM5KST-c, mu8UnEUDk48, OFXABOVxaJ0]
+  - metric: us10y
+    text: "Regime change in 2026: 10Y breaking 4.6% called 'a very dangerous signal' because it coincided with rising 10Y volatility (2026-05-19); by 2026-08-04 he said pricing at ~4.75% was too pessimistic about a hawkish Warsh; long-end yields to trend higher over time."
+    episodes: [O5vCeOdh4P0, xEWIQ7fgUIw, YJ8cpZrdvfo]
+  - metric: us10y
+    text: "5.5%+ could trigger another convexity-hedging wave (2026-10-13); rates spiked toward ~5.3 (ASR; maturity unclear) in the October shock."
+    episodes: [xfiZFQJW3gk, KwpuAfVKNQI]
+  - metric: move
+    text: "Rate volatility, not the rate level, is the core risk to liquidity and equities (repeated 2026-05 .. 2026-11)."
+    episodes: [O5vCeOdh4P0, Ca6l5KCuGoc, ydZQ-kVeYHw, xfiZFQJW3gk]
+  - metric: unrate
+    text: "Unemployment ~4% makes Fed cuts likely (2024-06); 4.6-4.7% would make current valuations clearly too high (2025-07)."
+    episodes: [W1pUl4cwvOY, ZJTxHVYguQw]
+  - metric: nfp
+    text: "Payrolls under ~80k would be needed for a 50bp cut (2024-08-27); trusts payrolls over the unemployment rate when they conflict."
+    episodes: [0i-KND1y-x8, W1pUl4cwvOY]
+  - metric: manual_fwd_pe_sp500
+    text: "S&P forward P/E: 22x is already high, a recession takes it to ~15x (2025-05); 19.3x vs 18.1x at the 2025 tariff low (2026-09-15); now compressed to ~20x vs 23-24x at the peak."
+    episodes: [aEda4v32hvc, sZi9d2wjmFE, 63vcms-Sw6w]
+  - metric: spx
+    text: "In a recession the S&P could fall to ~4000 (2025-04-15, during the tariff shock)."
+    episodes: [9mPxLPUidjY]
+  - metric: vix
+    text: "Short-vol funds sell at VIX ~12 and unwind at 15-16 (2024-05); VIX above 15 was his warning line in mid-2024; VIX 18 'not particularly low' (2026-07-21)."
+    episodes: [yNEy-OEl-_c, PMjOt-vsuqI, ZdgSfsSPnXQ]
+  - metric: brent
+    text: "Rule of thumb (Goldman): +10% oil -> +0.04pp PCE and -0.1pp GDP; the Fed cannot fix oil by hiking."
+    episodes: [3l5m7wleIjA, PkPEVz0_kjE, PweaTXhs-aU]
+  - metric: diesel_crack
+    text: "Refined products (diesel crack), not crude, drive the inflation people feel; crack could ease toward ~40."
+    episodes: [Ca6l5KCuGoc]
+
+framework:
+  - topic: T1
+    text: "Liquidity first: Treasury issuance in DV01 terms, long-end supply, TGA, bank balance sheets (eSLR), GS FCI, and above all rate volatility (convexity / MBS hedging, swaptions)."
+  - topic: T4
+    text: "Positioning and flows: CTA/systematic trigger levels and expected buying/selling, short-vol funds, prime-broker net/gross leverage, long/short ratio, leveraged ETFs and retail."
+  - topic: T5
+    text: "Valuation: forward P/E of the S&P and of AI/semis vs growth; 'low-P/E bubble' (cheap multiples hiding leverage and crowding)."
+  - topic: T3
+    text: "Fed and labour: payrolls over unemployment, Fed reaction function, market pricing vs dot plot; 2026: Warsh hands the long end to the market."
+  - topic: T6
+    text: "AI cycle: token demand vs compute supply, hyperscaler capex, payback (~2.2 years per data centre), memory/optical cycles, power and permitting."
+  - topic: T2
+    text: "Credit: AI financing (neoclouds, IG issuance, CDS of hyperscalers), private credit, refinancing wall around 2028, European sovereign spreads (France)."
+  - topic: T7
+    text: "Tariffs: effective tariff rate -> PCE (roughly tariff increase / 10), core PCE tariff contribution."
+  - topic: T8
+    text: "Energy/geopolitics: Iran, Hormuz, crude vs diesel crack, strategic reserves."
+  - topic: T10
+    text: "Japan/FX/crypto: yen carry trade, JGB yields, dollar as a 'US-equity dollar', bitcoin as a pure liquidity asset."
+
+timeline:
+  - period: "2024-05 .. 2024-09"
+    stance: "Constructive on US equities/AI; main risk = long-end rates from heavy issuance. Fed cuts later than priced (payrolls matter more than unemployment); argued for 25bp, Fed did 50bp."
+    episodes: [yNEy-OEl-_c, W1pUl4cwvOY, sIPesnSKirk, I8qEXK7lWxo, -NStQEhRZ1U]
+  - period: "2024-08 (yen carry unwind)"
+    stance: "Treated the August selloff as a carry/CTA deleveraging, not recession; said he turned optimistic a bit early; Nvidia 'cheap' at ~20x."
+    episodes: [AyIxtRxtn5Q, I8qEXK7lWxo]
+  - period: "2024-10 .. 2024-12"
+    stance: "US in a fiscal-expansion bull market (like China 2008-10); S&P 6000 by year-end reasonable; 10Y 4.25-4.5 fair; after the election suggested trimming positions after good earnings; sentiment overheated; hawkish December Fed means a long pause."
+    episodes: [dcUAS2OZb3c, jEHw9Kh5BlU, 1NswihXu2gY, qIRZZeHo62k, 0Dh9cC0bc_s]
+  - period: "2025-01 .. 2025-03"
+    stance: "January 10Y at 4.8 overdone, stronger dollar; ran ~60-65% equity allocation; Nvidia expectations 'full'; suggested exiting liquidity-driven positions after earnings; AI a bubble this year but not long-term."
+    episodes: [tttumbkuDs4, AZ2qHGStV2w, pWgfJJS_96E, UMFSEgwe8iI, eiD3P7mzSRU]
+  - period: "2025-04 .. 2025-05 (tariff shock)"
+    stance: "Most bearish period: compared with Q4 2018 (-25%); at least 50% recession odds; S&P ~4000 possible in recession; expected violent rallies in a downtrend; later admitted he misjudged how fast Trump would back off."
+    episodes: [I-Hqr3VcwT0, CPpwPnpLc8g, 9mPxLPUidjY, aEda4v32hvc, LLx502eHIfw]
+  - period: "2025-06 .. 2025-09"
+    stance: "Index valuation too high but bifurcated: semiconductors are the next decade's bull market; 25bp September cut, not 50; 10Y 4.0-4.05 'the top/limit' for the bond rally; AI token demand cycle."
+    episodes: [FUyHWoaw6uQ, 08QLsFCoCTM, UzzouKS6sPg, ZpHeK6Dul-k, RGicM5KST-c]
+  - period: "2025-10 .. 2025-12"
+    stance: "AI 'somewhat bubbly' but not 2000-style; credit scares are single cases; bitcoin weak as a liquidity asset; defends OpenAI's demand; memory shortage; possible 10-15% correction in 2026 with momentum names falling much more."
+    episodes: [LLx502eHIfw, mu8UnEUDk48, AxBn2satLcw, lnCZLLjkdDc, Vk43i8mBJlA]
+  - period: "2026-01 .. 2026-03"
+    stance: "Bullish: US valuations 'not high', AI capex priced at the low end; 10Y capped ~4.2-4.25; dollar bottoming. Iran/oil shock from March: valuation back to April-2025 lows, Fed protects growth rather than hikes."
+    episodes: [WU3h3-kdTJQ, k4kMSTvRdiA, OFXABOVxaJ0, f3jUrMeZhWw, 3l5m7wleIjA]
+  - period: "2026-04 .. 2026-06"
+    stance: "April liquidity flood and CTA buying lifted markets; warned of crowding and a 'low-P/E bubble' (Korean retail leverage on memory names); 10Y near 4.5 (2026-05-05) and breaking 4.6 with rising rate vol (2026-05-19) = danger signals."
+    episodes: [PkPEVz0_kjE, PweaTXhs-aU, O5vCeOdh4P0, 99aca6OCfsI, Xs2lGrFjTPA]
+  - period: "2026-07 .. 2026-09"
+    stance: "July AI/semis deleveraging (he admits misjudging growth/liquidity); then Jackson Hole hawkish pivot and Warsh handing the long end to the market; expected a September hike to be mostly priced and not fatal; multiples resetting, positioning light; 'more positive on the next 12 months' (2026-08-25)."
+    episodes: [EnbXozQn89s, ZdgSfsSPnXQ, xEWIQ7fgUIw, TQ3G5Jf-yNM, df816GNfpPw, sZi9d2wjmFE]
+  - period: "2026-10 .. 2026-11"
+    stance: "Oil-linked rate volatility caused a liquidity shock that spread to AI; admits underestimating liquidity vs AI fundamentals; says rate vol is easing, positioning and valuation are extremely low; stays bullish AI/semis long-term, cautious on financials and on multiples."
+    episodes: [ydZQ-kVeYHw, xfiZFQJW3gk, KwpuAfVKNQI, ZPJgzAP-iqU, 63vcms-Sw6w]

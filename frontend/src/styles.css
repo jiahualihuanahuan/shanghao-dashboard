@@ -40,3 +40,6 @@ th { color:var(--muted); font-weight:500; } .row-trig { background:#3a1410; }
 footer { margin-top:28px; border-top:1px solid var(--line); padding-top:10px; }
 code { background:#0e1627; padding:1px 5px; border-radius:4px; }
 @media (max-width:800px) { .viewgrid { grid-template-columns:1fr; } .grid { grid-template-columns:1fr; } }
+.nowrap { white-space: nowrap; }
+.stance ul { margin: 4px 0 12px 18px; padding: 0; }
+.stance li { margin: 4px 0; }

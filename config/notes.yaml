@@ -4,6 +4,46 @@
 # Paraphrases only. No trade recommendations. Dates come from data/videos.csv (the real upload date).
 notes:
   - episode: 63vcms-Sw6w
+    topic: T1
+    basis: own ASR
+    text: "Calls the selloff a short-term liquidity shock tied to oil-linked rate volatility after the Fed stopped managing the long end, not politics; expects liquidity to repair via Iran easing -> oil -> rate vol -> credit buyers; multiples may keep compressing (S&P ~20x rather than 23-24x); most cautious on banks/financials, still optimistic on semis."
+  - episode: 63vcms-Sw6w
+    topic: T9
+    basis: own ASR
+    text: "Names three post-'blue wave' risks, all about macro liquidity: pressure on the Fed and banks (Elizabeth Warren on the banking committee), Warsh unwilling to support the long end with QE while Congress blocks financial deregulation, and a possible government shutdown."
+  - episode: ZPJgzAP-iqU
+    topic: T4
+    basis: own ASR
+    text: "Admits liquidity outweighed AI fundamentals in October; buy/sell ratio at the most short-heavy level in ~10 years (similar to the early-2026 Iran shock and the 2025 tariff shock), semis hedge-fund net exposure negative; OpenAI and Anthropic fund-raises drained equity liquidity; calls it a 'downward bubble' with room for violent rebounds."
+  - episode: KwpuAfVKNQI
+    topic: T4
+    basis: own ASR
+    text: "Long/short ratio back to ~1.5, the tariff-period level; forward P/E below the tariff low and, for semis, below the ChatGPT-launch level; French bond spread ~168 (ASR) and not fully stabilised."
+  - episode: sZi9d2wjmFE
+    topic: T3
+    basis: own ASR
+    text: "Expects the Fed to hike that week for credibility (market pricing ~94%); argues a long hiking cycle is unsupportable and ~3.5 hikes is over-priced; hikes cannot produce more oil or chips; S&P forward P/E 19.3x vs 18.1x at the 2025 tariff low."
+  - episode: df816GNfpPw
+    topic: T3
+    basis: own ASR
+    text: "Reads Jackson Hole as hawkish (focus on inflation, ~60% hike odds as he recalled); under Warsh the Fed leaves the long end to the market, so long yields drift higher; AI data centres with ~2.2-year payback are not very rate-sensitive."
+  - episode: O5vCeOdh4P0
+    topic: T1
+    basis: own ASR
+    text: "10Y breaking 4.6% (30Y ~5.2-5.3) is 'a very dangerous signal' mainly because 10Y volatility rose with it; warns CTAs could sell ~20 bn in the coming week and that leverage in semis needs to be flushed."
+  - episode: 99aca6OCfsI
+    topic: T5
+    basis: own ASR
+    text: "'Low-P/E bubble': cheap multiples make investors buy every dip with leverage (Korean retail on SK Hynix with 5x leverage, home equity); positioning crowded even though the AI revenue thesis is intact."
+  - episode: OFXABOVxaJ0
+    topic: T1
+    basis: own ASR
+    text: "10Y hard to push above 4.25%, and he described a move to 4.5% as a bond opportunity; 4.0% is where yields could bounce; overall market view leaning optimistic."
+  - episode: ZJTxHVYguQw
+    topic: T3
+    basis: own ASR
+    text: "Valuations clearly too high if unemployment reaches 4.6-4.7%; he and many investors keep cash waiting for that; calls 2025 a tail-risk year but semis/AI not expensive on a longer horizon."
+  - episode: 63vcms-Sw6w
     topic: T9
     basis: own ASR
     text: "Opens by discussing the US midterm result as ASR heard it (both chambers going to Democrats, including Texas) and its implication for AI data-centre buildout sentiment; says market liquidity is still scarce."

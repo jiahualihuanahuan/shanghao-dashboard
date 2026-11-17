@@ -64,3 +64,17 @@ def test_real_config_indicators_compile_and_videos_seed():
     assert len(ti.indicators) >= 15
     for k, v in ind["indicators"].items():
         assert v["topic"] in ind["topics"], k
+
+
+def test_untimed_files_are_indexed_without_timestamps(tmp_path):
+    (tmp_path / "bbb.txt").write_text("# header comment 十年期\n" + "\n".join(
+        ["十年期利率 上升", "无关 一句", "无关 两句", "无关 三句", "无关 四句", "十年期 又上升"]), encoding="utf-8")
+    write(tmp_path, "aaa", [(5, "十年期利率上升")])
+    ti = TranscriptIndex(tmp_path, VID, IND)
+    assert ti.scan()["transcribed"] == 2
+    hits = ti.search("rates", limit=10, per_episode=5)
+    un = [h for h in hits if h["video_id"] == "bbb"]
+    assert len(un) == 2 and all(h["t"] is None and h["url"] == "https://youtu.be/bbb" and not h["timed"] for h in un)
+    assert all("header" not in h["text"] for h in un)
+    timed = [h for h in hits if h["video_id"] == "aaa"][0]
+    assert timed["t"] == 5 and timed["url"].endswith("?t=5") and timed["timed"]

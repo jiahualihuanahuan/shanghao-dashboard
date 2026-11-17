@@ -50,6 +50,8 @@ class Service:
         self.indicators = ind.get("indicators", {})
         self.notes = (yaml.safe_load((cd / "notes.yaml").read_text(encoding="utf-8")) or {}).get("notes", [])
         self.videos = load_videos(cd / "videos.csv")
+        sp = cd / "stance.yaml"
+        self.stance_cfg = (yaml.safe_load(sp.read_text(encoding="utf-8")) or {}) if sp.exists() else {}
         self.tindex = TranscriptIndex(self.s.transcripts_dir, self.videos, self.indicators)
         self.tindex.scan()
         _, self.manual_meta = ingest.load_manual(cd / "manual_inputs.yaml")
@@ -175,6 +177,34 @@ class Service:
         return {"key": key, "title": ind["title"], "topic": ind["topic"], "disclaimer": DISCLAIMER,
                 "transcripts": {k: v for k, v in self.tindex.status().items() if k in ("transcribed", "total")},
                 "snippets": self.tindex.search(key, limit=limit)}
+
+    def _ep(self, vid: str) -> dict:
+        v = self.videos.get(vid, {})
+        return {"id": vid, "date": v.get("date", ""), "title": v.get("title", vid), "url": f"https://youtu.be/{vid}"}
+
+    def stance(self) -> dict:
+        """Curated framework / timeline / key levels (config/stance.yaml) with episode ids resolved to dates+links."""
+        c = self.stance_cfg or {}
+
+        def items(lst):
+            out = []
+            for it in lst or []:
+                d = dict(it)
+                if "episode" in d:
+                    d["episode"] = self._ep(d["episode"])
+                if "episodes" in d:
+                    d["episodes"] = sorted((self._ep(e) for e in d["episodes"]), key=lambda e: e["date"])
+                out.append(d)
+            return out
+
+        latest = dict(c.get("latest") or {})
+        if latest:
+            latest["episode"] = self._ep(latest["episode"]) if latest.get("episode") else None
+            latest["points"] = items(latest.get("points"))
+            latest["would_change_mind"] = items(latest.get("would_change_mind"))
+        fw = [{**f, "topic_name": self.topics.get(f.get("topic"), "")} for f in c.get("framework") or []]
+        return {"as_of": c.get("as_of"), "source": c.get("source"), "latest": latest, "key_levels": items(c.get("key_levels")),
+                "framework": fw, "timeline": items(c.get("timeline")), "disclaimer": DISCLAIMER}
 
     def notes_feed(self) -> list:
         out = []

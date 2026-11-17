@@ -20,7 +20,7 @@ docker compose up -d
 
 * UI: <http://localhost:8080> (`WEB_PORT`, `BIND_ADDR` in `.env`; there is **no login** - keep `BIND_ADDR=127.0.0.1` unless
   you are on a trusted network).
-* JSON endpoints: `/api/health`, `/api/panels`, `/api/alerts`, `/api/alerts/history`, `/api/view/<indicator>`, `/api/notes`, `/api/sources`.
+* JSON endpoints: `/api/health`, `/api/panels`, `/api/alerts`, `/api/alerts/history`, `/api/view/<indicator>`, `/api/stance`, `/api/notes`, `/api/sources`.
 * Without a `FRED_API_KEY` the FRED panels (credit spreads, jobs, CPI, Fed balance sheet) show **"add FRED key"**; every
   other panel works. Get a free key at <https://fred.stlouisfed.org/docs/api/api_key.html>. Nothing is registered for you.
 
@@ -34,7 +34,8 @@ docker compose up -d
 | Positioning, flows & valuation | T4/T5 | VIX, VIX3M, term-structure ratio, SKEW, SPX gamma *estimate*, put/call OI, S&P drawdown, CFTC leveraged-fund / asset-manager positions, forward P/E (manual) |
 | AI & semiconductors | T6 | Semis basket, hyperscalers, software vs semis (rebased), capex figures (manual) |
 | Tariffs, energy, Japan & crypto | T7-T10 | Brent, ULSD-Brent crack, nat gas, USD/JPY, Nikkei, Japan 10Y, yen COT, Bitcoin, USD/CNY |
-| Shanghao view | all | Per indicator: his latest dated statements with `youtu.be/<id>?t=<sec>` links |
+| Shanghao stance | all | Curated summary (`config/stance.yaml`): latest stance, what would change his mind, levels he has cited, timeline of calls 2024-05 → 2026-11, his framework - every item linked to its episode |
+| Shanghao view | all | Per indicator: his latest dated statements with `youtu.be/<id>?t=<sec>` links (links to the video start for untimed transcripts) |
 | Notes feed | non-data topics | Politics, AI financing, power/supply chain, Intel foundry... newest first, each labelled by basis |
 | Alerts | - | Current rule status, thresholds, history |
 | Sources | - | Per-source status, age, errors |
@@ -67,8 +68,10 @@ options expiring within 45 days. It is a rough indicator, not a measurement of d
 
 ## The "Shanghao view" and transcripts
 
-The backend reads `<video_id>.txt` files (lines `[seconds] text`) from the folder mounted at `/data/transcripts`
-(read-only; set `TRANSCRIPTS_HOST_PATH`). **A fresh clone has no transcripts, so the Shanghao view stays empty until you point `TRANSCRIPTS_HOST_PATH` at a folder of `<video_id>.txt` files** (they are not in this repo). It rescans every `TRANSCRIPT_SCAN_MINUTES` (default 5) by modification time, so
+The backend reads `<video_id>.txt` files from the folder mounted at `/data/transcripts`. Two line formats are accepted:
+`[seconds] text` (timed; snippets deep-link to `?t=<sec>`) and plain `text` lines (untimed, e.g. a Whisper text export;
+snippets link to the video start and show a *no timestamp* badge). Lines starting with `#` are comments. The folder is mounted
+read-only (set `TRANSCRIPTS_HOST_PATH`). **A fresh clone has no transcripts, so the Shanghao view stays empty until you point `TRANSCRIPTS_HOST_PATH` at a folder of `<video_id>.txt` files** (they are not in this repo). It rescans every `TRANSCRIPT_SCAN_MINUTES` (default 5) by modification time, so
 transcripts that arrive later appear without a restart. The header chip shows `transcripts x/90`.
 
 * `config/videos.csv` maps video id -> real upload date and title (titles contain typos, e.g. "2026年12月30日" was
@@ -76,6 +79,14 @@ transcripts that arrive later appear without a restart. The header chip shows `t
 * `config/indicators.yaml` lists, per indicator, the keyword regexes used to find relevant passages, including common
   ASR mis-hearings ("compressorly" for convexity). Edit and `POST /api/alerts/reload` (or restart).
 * Results are ordered **newest episode first**, at most 2 passages per episode, labelled *auto-transcribed (ASR)*.
+* **Importing a combined Whisper export.** `tools/import_transcripts_md.py all_transcripts.md --out <transcripts dir>`
+  splits a markdown file with one `## <video title>` section per episode into `<video_id>.txt` files, matching titles to
+  `videos.csv` (whitespace-insensitive; duplicate titles are resolved by text overlap with an existing timed transcript or
+  with `--assign "<title>=<id>"`). By default it only fills missing ids; `--replace` overwrites (large-v3 text is more
+  accurate but loses the `?t=` deep links). It prints a JSON summary (written / skipped / unmatched / ambiguous).
+* `config/stance.yaml` is a hand-curated summary of the full transcript set (89 of 90 episodes as of 2026-11-10; the
+  2026-04-21 upload `WOmqPSy7Bbw` was missing from the export because it shares a title with `PweaTXhs-aU`). Update it
+  when new episodes arrive; every item must cite an episode id from `videos.csv` (a test checks this).
 * The repository does **not** contain transcripts, audio or database files (`.gitignore`). `tools/transcribe.py`
   (optional, needs `faster-whisper` + ffmpeg) produces the expected format from audio; YouTube captions do not exist
   for this channel, so a local ASR pass is the only source.
@@ -97,7 +108,10 @@ transcripts that arrive later appear without a restart. The header chip shows `t
   Output keys: `triggered` (new alerts, each with `id, metric, value, threshold, as_of, source, stale, message, basis,
   severity`), `ongoing` (still breached, within cooldown), `unavailable`, `source_errors`, `sources_without_key`.
   `--state` makes a scheduled run report each breach once per cooldown instead of every run.
-* Default thresholds and their basis are listed in `config/alerts.yaml` (comments explain each).
+* Default thresholds and their basis are listed in `config/alerts.yaml` (comments explain each). Rules marked
+  *his stated level* cite the episode where he gave the figure (e.g. `unrate_ge_4_6`: unemployment 4.6-4.7% =
+  valuations too high, 2025-07-02). `us10y_ge_4_6` (2026-05-19) ships **disabled**: he tied it to rising rate vol and
+  later called ~4.75% over-pessimistic, so the bare level would alert constantly.
 
 ## Layout
 
@@ -105,7 +119,7 @@ transcripts that arrive later appear without a restart. The header chip shows `t
 backend/app        FastAPI app, APScheduler jobs, SQLite, adapters (sources/), derived series, alert evaluator
 config/            alerts.yaml, indicators.yaml, notes.yaml, manual_inputs.yaml, videos.csv   (bind-mounted, editable)
 frontend/          React + Vite + ECharts, served by nginx in Docker (nginx proxies /api to the backend)
-tools/             check_alerts.py (standalone), transcribe.py (optional)
+tools/             check_alerts.py (standalone), transcribe.py (optional), import_transcripts_md.py (Whisper markdown -> <id>.txt)
 ```
 
 ## Develop and test

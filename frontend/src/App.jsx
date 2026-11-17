@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { api } from './api'
 import ChartCard from './components/ChartCard'
 import { AlertsPanel, NotesFeed, Overview, SourcesTable, ViewPanel } from './components/Views'
+import StancePanel from './components/Stance'
 
 const REFRESH_MS = 60_000
 
@@ -30,6 +31,7 @@ export default function App() {
   const tabs = [
     { id: 'overview', title: 'Overview' },
     ...panels.map((p) => ({ id: p.id, title: p.title })),
+    { id: 'stance', title: 'Shanghao stance' },
     { id: 'view', title: 'Shanghao view' },
     { id: 'notes', title: 'Notes feed' },
     { id: 'alerts', title: `Alerts${alerts && alerts.triggered_count ? ` (${alerts.triggered_count})` : ''}` },
@@ -66,6 +68,7 @@ export default function App() {
             <div className="grid">{panel.charts.map((c) => <ChartCard key={c.id} chart={c} tick={tick} />)}</div>
           </div>
         )}
+        {tab === 'stance' && <StancePanel />}
         {tab === 'view' && <ViewPanel />}
         {tab === 'notes' && <NotesFeed />}
         {tab === 'alerts' && <AlertsPanel alerts={alerts} history={history} />}

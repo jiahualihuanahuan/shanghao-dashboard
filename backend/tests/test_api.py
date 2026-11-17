@@ -91,7 +91,7 @@ def test_view_notes_and_transcript_status(client):
 def test_no_trade_signal_language_in_user_facing_config():
     import re
     bad = re.compile(r"\b(buy|sell|short it|go long|recommend(ed)? (buying|selling))\b", re.I)
-    for f in ("alerts.yaml", "notes.yaml", "manual_inputs.yaml"):
+    for f in ("alerts.yaml", "notes.yaml", "manual_inputs.yaml", "stance.yaml"):
         txt = (ROOT / "config" / f).read_text()
         # allow descriptive words about flows ("CTA buying", "selling pressure") but not imperatives
         assert not re.search(r"\b(you should|we recommend|buy now|sell now|buy the|sell the)\b", txt, re.I), f
@@ -112,3 +112,15 @@ def test_failed_source_reports_state(tmp_path, fixture_get):
     fixture_get.state["fail"].clear()
     assert ingest.run_group(db, "treasury_curve", {}, get=fixture_get)["state"] == "ok"
     assert db.statuses()["treasury_curve"]["last_ok"]
+
+
+def test_stance_endpoint_resolves_episodes(client):
+    d = client.get("/api/stance").json()
+    assert d["as_of"] and d["latest"]["headline"]
+    assert d["latest"]["episode"]["id"] == "63vcms-Sw6w" and d["latest"]["episode"]["date"] == "2026-11-10"
+    for t in d["timeline"]:
+        assert t["episodes"] and all(e["date"] for e in t["episodes"]), t["period"]   # every cited id is in videos.csv
+    for k in d["key_levels"]:
+        assert all(e["date"] for e in k["episodes"]), k["text"]
+    assert all(p["episode"]["date"] for p in d["latest"]["points"] + d["latest"]["would_change_mind"])
+    assert {f["topic"] for f in d["framework"]} >= {"T1", "T4", "T6"}

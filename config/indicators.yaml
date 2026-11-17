@@ -1,5 +1,5 @@
 # Maps each dashboard indicator to the keywords used to find what he said about it in the transcripts.
-# Keywords are regexes (case-insensitive). The transcripts are automatic speech-to-text (faster-whisper "small"),
+# Keywords are regexes (case-insensitive). The transcripts are automatic speech-to-text (faster-whisper "small"/"large-v3"),
 # which garbles English finance terms - so common mis-hearings are listed too (e.g. "compressorly" = convexity).
 # min_hits = distinct keywords that must appear in a ~3-line window for it to count.
 topics:
@@ -24,7 +24,7 @@ indicators:
     title: Rate volatility, convexity hedging, swaption/gamma squeezes
     topic: T1
     min_hits: 2
-    keywords: ["利率波动", "波动率", "convex", "compressorly", "compatibility", "combat to the", "swaption", "swapshin", "swap vol", "gamma squeeze", "\\bMBS\\b", "mogage", "mortgage", "预先还款", "对冲波动"]
+    keywords: ["利率波动", "波动率", "convex", "compressorly", "compatibility", "combat to the", "swaption", "swapshin", "swap vol", "gamma squeeze", "\\bMBS\\b", "mogage", "mortgage", "预先还款", "对冲波动", "利率波动率", "利率的?(vol|wall|波)", "rate vol", "duration", "conversely hedge"]
   curve:
     title: Yield curve slope
     topic: T1
@@ -34,12 +34,12 @@ indicators:
     title: Funding & liquidity plumbing (SOFR, repo, TGA, balance sheet)
     topic: T1
     min_hits: 1
-    keywords: ["SOFR", "repo", "\bTGA\b", "缩表", "扩表", "\bQE\b", "\bQT\b", "准备金", "reserve", "资金面", "缺钱", "流动性紧"]
+    keywords: ["SOFR", "repo", "\bTGA\b", "缩表", "扩表", "\bQE\b", "\bQT\b", "准备金", "reserve", "资金面", "缺钱", "流动性紧", "FCI", "流动性(紧缩|匮乏|冲击|shock|不足)", "eSLR|ESLR"]
   credit_spreads:
     title: Credit spreads (HY, CCC, IG), CDS
     topic: T2
     min_hits: 2
-    keywords: ["high.?yield", "hi-you", "hio", "CCC", "\\bIG bond\\b", "igbond", "投资级", "信用", "信贷", "credit", "spread", "\\bCDS\\b", "违约", "利差", "private credit", "私募信贷"]
+    keywords: ["high.?yield", "hi-you", "hio", "CCC", "\\bIG bond\\b", "igbond", "投资级", "信用", "信贷", "credit", "spread", "\\bCDS\\b", "违约", "利差", "private credit", "私募信贷", "法国国债"]
   funding_ai_debt:
     title: AI financing, hyperscaler bond issuance, refinancing wall
     topic: T2
@@ -49,7 +49,7 @@ indicators:
     title: Fed policy, hikes/cuts and market pricing
     topic: T3
     min_hits: 1
-    keywords: ["美联储", "联储", "连储", "连处", "\\bFOMC\\b", "降息", "加息", "\\bdot\\b", "\\bFed\\b", "鹰", "鸽", "Warsh", "Kevin"]
+    keywords: ["美联储", "联储", "连储", "连处", "\\bFOMC\\b", "降息", "加息", "\\bdot\\b", "\\bFed\\b", "鹰", "鸽", "Warsh", "Kevin", "Walsh", "\\bWash\\b", "沃什", "Jackson"]
   labor_inflation:
     title: Jobs (NFP, unemployment), wages and inflation
     topic: T3
@@ -69,17 +69,17 @@ indicators:
     title: Fund positioning, shorts, hedge-fund exposure
     topic: T4
     min_hits: 2
-    keywords: ["仓位", "position", "short interest", "做空", "空头", "踏空", "对冲基金", "hfarm", "多空基金", "prime broker", "net margin"]
+    keywords: ["仓位", "position", "short interest", "做空", "空头", "踏空", "对冲基金", "hfarm", "多空基金", "prime broker", "net margin", "long.?short ratio", "net leverage", "gross leverage", "short cover", "仓位(轻|低|很空|极低)"]
   valuation:
     title: Valuation (forward P/E, ERP)
     topic: T5
     min_hits: 2
-    keywords: ["估值", "\\bPE\\b", "市盈率", "multiple", "倍", "risk premium", "便宜", "forward"]
+    keywords: ["估值", "\\bPE\\b", "市盈率", "multiple", "倍", "risk premium", "便宜", "forward", "forward.?PE", "低P(E)?的?泡沫", "压估值"]
   ai_demand:
     title: AI demand, token consumption, compute, capex
     topic: T6
     min_hits: 2
-    keywords: ["token", "算力", "compute", "capex", "k-?pax", "k-?ship", "云厂商", "hyperscal", "数据中心", "agent", "Anthropic", "OpenAI"]
+    keywords: ["token", "算力", "compute", "capex", "k-?pax", "k-?ship", "云厂商", "hyperscal", "数据中心", "agent", "Anthropic", "OpenAI", "\\bARR\\b", "\\bMuse\\b", "算力缺口"]
   semis_memory:
     title: Semiconductors, memory (DRAM/HBM), optical, foundry
     topic: T6
@@ -99,7 +99,7 @@ indicators:
     title: Oil, diesel cracks, gas, geopolitics
     topic: T8
     min_hits: 1
-    keywords: ["油价", "原油", "brent", "\\bWTI\\b", "柴油", "diesel", "裂解差", "crack", "天然气", "伊朗", "战争", "打仗", "中东", "能源", "energy"]
+    keywords: ["油价", "原油", "brent", "\\bWTI\\b", "柴油", "diesel", "裂解差", "crack", "天然气", "伊朗", "战争", "打仗", "中东", "能源", "energy", "成品油", "霍尔木兹|海峡", "战储"]
   politics:
     title: Politics, elections, deregulation, immigration
     topic: T9

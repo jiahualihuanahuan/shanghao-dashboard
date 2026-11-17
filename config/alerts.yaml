@@ -158,6 +158,25 @@ alerts:
     basis: his stated level (2024-06 episode; may be outdated)
     episode: W1pUl4cwvOY
     message: "Unemployment {value}% >= {threshold}% (he said ~4% makes Fed cuts likely)"
+  - id: unrate_ge_4_6
+    metric: unrate
+    kind: level
+    op: ">="
+    threshold: 4.6
+    severity: medium
+    basis: his stated level (2025-07-02 episode; reaffirmed nowhere later, may be outdated)
+    episode: ZJTxHVYguQw
+    message: "Unemployment {value}% >= {threshold}% (he said unemployment reaching 4.6-4.7% would make current valuations clearly too high)"
+  - id: us10y_ge_4_6
+    metric: us10y
+    kind: level
+    op: ">="
+    threshold: 4.6
+    severity: medium
+    enabled: false
+    basis: his stated level (2026-05-19), DISABLED by default - he called 10Y > 4.6% dangerous only together with rising 10Y volatility, and on 2026-08-04 said ~4.75% was over-pessimistic; the level alone has been above 4.6 for months
+    episode: O5vCeOdh4P0
+    message: "US 10Y yield {value}% >= {threshold}% (he flagged a break of 4.6% as dangerous when 10Y volatility rises with it - check MOVE)"
   - id: fwd_pe_low
     metric: manual_fwd_pe_sp500
     kind: level

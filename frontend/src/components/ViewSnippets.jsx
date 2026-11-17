@@ -22,6 +22,7 @@ export default function ViewSnippets({ indicator, limit = 4 }) {
           <div className="small">
             <a href={s.url} target="_blank" rel="noreferrer">{s.date}</a> · {s.title}
             <span className="badge muted" title={d.disclaimer}>auto-transcribed (ASR)</span>
+            {s.t === null && <span className="badge muted" title="Imported without timestamps; the link opens the start of the video">no timestamp</span>}
           </div>
           <div className="snip-text">{s.text}</div>
         </div>

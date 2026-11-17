@@ -134,6 +134,11 @@ def view(key: str, limit: int = 6):
     return r
 
 
+@app.get("/api/stance")
+def stance():
+    return get_service().stance()
+
+
 @app.get("/api/notes")
 def notes():
     return get_service().notes_feed()

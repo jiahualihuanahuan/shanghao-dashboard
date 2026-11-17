@@ -1,7 +1,11 @@
 """Transcript index behind the "Shanghao view" panel.
 
-Reads /data/transcripts/<video_id>.txt (lines like "[123] text", seconds from start), re-scans by mtime so files that
-arrive while the app runs are picked up. Snippets are ASR text and are always labelled as such - never as quotes."""
+Reads /data/transcripts/<video_id>.txt, re-scans by mtime so files that arrive while the app runs are picked up.
+Two line formats are accepted (they can be mixed, one per file is typical):
+  * timed:   "[123] text"  (seconds from start)  -> snippets link to youtu.be/<id>?t=123
+  * untimed: "text"        (e.g. imported from a Whisper text/markdown export without timestamps,
+                            see tools/import_transcripts_md.py) -> snippets link to the video start, t = null
+Lines starting with "#" are comments. Snippets are ASR text and are always labelled as such - never as quotes."""
 from __future__ import annotations
 import csv
 import os
@@ -9,7 +13,7 @@ import re
 import threading
 from pathlib import Path
 
-DISCLAIMER = ("Auto-transcribed speech (ASR, faster-whisper small) - may contain errors, especially English finance "
+DISCLAIMER = ("Auto-transcribed speech (ASR, faster-whisper small or large-v3) - may contain errors, especially English finance "
               "terms. Paraphrase-level context only; not a verbatim quote and not investment advice.")
 LINE = re.compile(r"^\[(\d+)\]\s*(.*)$")
 
@@ -26,7 +30,7 @@ def load_videos(path: Path) -> dict:
 class TranscriptIndex:
     def __init__(self, tdir: Path, videos: dict, indicators: dict):
         self.tdir, self.videos, self.indicators = Path(tdir), videos, indicators
-        self.chunks: dict[str, list] = {}     # video_id -> [(start_sec, text)]
+        self.chunks: dict[str, list] = {}     # video_id -> [(pos, text, start_sec | None)]
         self._sig: dict[str, float] = {}
         self._cache: dict = {}
         self._lock = threading.RLock()
@@ -35,15 +39,28 @@ class TranscriptIndex:
     # ---- indexing -------------------------------------------------
     @staticmethod
     def _chunk(text: str, win: int = 3, step: int = 2):
-        lines = []
+        """Returns [(pos, text, t)]: pos orders/de-duplicates windows, t is seconds (timed) or None (untimed)."""
+        timed, untimed = [], []
         for ln in text.splitlines():
-            m = LINE.match(ln.strip())
-            if m and m.group(2):
-                lines.append((int(m.group(1)), m.group(2).strip()))
+            ln = ln.strip()
+            if not ln or ln.startswith("#"):
+                continue
+            m = LINE.match(ln)
+            if m:
+                if m.group(2).strip():
+                    timed.append((int(m.group(1)), m.group(2).strip()))
+            else:
+                untimed.append(ln)
         out = []
-        for i in range(0, len(lines), step):
-            part = lines[i:i + win]
-            out.append((part[0][0], " ".join(t for _, t in part)[:360]))
+        if timed:
+            for i in range(0, len(timed), step):
+                part = timed[i:i + win]
+                out.append((part[0][0], " ".join(t for _, t in part)[:360], part[0][0]))
+        else:
+            # untimed: windows get a synthetic position 20 apart, so neighbouring (overlapping) windows are
+            # skipped by the 25-unit overlap rule in search() just like overlapping timed windows.
+            for n, i in enumerate(range(0, len(untimed), step)):
+                out.append((n * 20, " ".join(untimed[i:i + win])[:360], None))
         return out
 
     def scan(self) -> dict:
@@ -95,21 +112,22 @@ class TranscriptIndex:
             for vid, chunks in self.chunks.items():
                 meta = self.videos.get(vid, {"id": vid, "date": "", "title": vid})
                 scored = []
-                for sec, text in chunks:
+                for pos, text, t in chunks:
                     n = sum(1 for rx in rxs if rx.search(text))
                     if n >= need:
-                        scored.append((n, sec, text))
+                        scored.append((n, pos, text, t))
                 scored.sort(key=lambda x: (-x[0], x[1]))
                 picked = []
-                for n, sec, text in scored:
+                for n, pos, text, t in scored:
                     if len(picked) >= per_episode:
                         break
-                    if any(abs(sec - p[1]) < 25 for p in picked):   # skip overlapping windows
+                    if any(abs(pos - p[1]) < 25 for p in picked):   # skip overlapping windows
                         continue
-                    picked.append((n, sec, text))
-                for n, sec, text in picked:
-                    hits.append({"video_id": vid, "date": meta["date"], "title": meta["title"], "t": sec, "hits": n,
-                                 "text": text, "url": f"https://youtu.be/{vid}?t={sec}", "basis": "own ASR"})
+                    picked.append((n, pos, text, t))
+                for n, pos, text, t in picked:
+                    url = f"https://youtu.be/{vid}" + (f"?t={t}" if t is not None else "")
+                    hits.append({"video_id": vid, "date": meta["date"], "title": meta["title"], "t": t, "hits": n,
+                                 "text": text, "url": url, "basis": "own ASR", "timed": t is not None})
             hits.sort(key=lambda h: (h["date"], h["hits"]), reverse=True)   # recency first
             res = hits[:limit]
             self._cache[ck] = res
